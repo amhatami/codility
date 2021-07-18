@@ -1,36 +1,67 @@
-//Time Complexity: O(A+B)O(A+B).
-//Space Complexity: O(A+B)O(A+B).
-
+//Time Complexity: O(N * log(N))
 // you can also use imports, for example:
-// import java.util.*;
+import java.util.*;
 
 // you can write to stdout for debugging purposes, e.g.
 // System.out.println("this is a debug message");
 
 class Solution {
-    public String solution(int A, int B) {
-        StringBuilder ans = new StringBuilder();
+    Map<Integer, Node> map;
+    Node head, tail;
+    Set<Integer> used = new HashSet();
 
-        while (A > 0 || B > 0) {
-            boolean writeA = false;
-            int L = ans.length();
-            if (L >= 2 && ans.charAt(L-1) == ans.charAt(L-2)) {
-                if (ans.charAt(L-1) == 'b')
-                    writeA = true;
-            } else {
-                if (A >= B)
-                    writeA = true;
-            }
 
-            if (writeA) {
-                A--;
-                ans.append('a');
-            } else {
-                B--;
-                ans.append('b');
-            }
-        }
-
-        return ans.toString();
+    public int solution(int[] A) {
+        FirstUnique(A);
+        return showFirstUnique();
     }
+    public void FirstUnique(int[] nums) {        
+        map = new HashMap<>();
+        head = new Node(0);
+        tail = new Node(0);
+        head.next = tail;
+        tail.prev = head;
+        for(int num: nums) add(num);
+    }
+    
+    public int showFirstUnique() {
+        if(head.next == tail) return -1;
+        else return head.next.val;
+    }
+    
+    public void add(int value) {
+        if(used.contains(value)) return;
+        if(map.containsKey(value)){
+            removeNodeFromMapAndList(value);
+        }else{
+            addElement(value);
+        }
+    }
+    
+    public void removeNodeFromMapAndList(int value){
+        Node node = map.get(value);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        map.remove(value);
+        used.add(value);
+    }
+    
+    public void addElement(int value){
+        Node newNode = new Node(value);
+        Node previous = tail.prev;
+        newNode.next = tail;
+        tail.prev = newNode;
+        newNode.prev = previous;
+        previous.next = newNode;
+        map.put(value, newNode);
+    }
+    
+    class Node{
+        Node next=null, prev=null;
+        int val;
+        public Node(int val){
+            this.val = val;
+        }
+    }
+   
 }
