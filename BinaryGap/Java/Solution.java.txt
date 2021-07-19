@@ -1,0 +1,24 @@
+//Time Complexity: O(d)  where d is the number of digits in n.
+//Space Complexity: O(d)  where d is the number of digits in n.
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int N) {
+        String binaryNumber = Integer.toBinaryString(N);
+
+        String[] gaps = binaryNumber.replaceAll("0+$", "").split("1");
+
+
+        int maxLength = 0;
+        for (String gap: gaps) {
+            if (gap.length() > 0 && gap.length() > maxLength) {
+                maxLength = gap.length();
+            }
+        }
+        return maxLength;
+    }
+}

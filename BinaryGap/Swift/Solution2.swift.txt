@@ -1,0 +1,23 @@
+//Time Complexity: O(d)  where d is the number of digits in n.
+//Space Complexity: O(d)  where d is the number of digits in n.
+
+import Foundation
+import Glibc
+
+// you can write to stdout for debugging purposes, e.g.
+// print("this is a debug message")
+
+public func solution(_ n: Int) -> Int {
+    let binaryRepr = String(n, radix: 2) //
+
+    let bitPositions = binaryRepr.enumerated()
+        .filter { $0.element == "1" }
+        .map { $0.offset }
+
+    let longestGap = zip(bitPositions, bitPositions.dropFirst())
+        .map { $1 - $0 - 1 }
+        .max() ?? 0
+
+    return longestGap
+}
+
