@@ -1,6 +1,6 @@
 // Complexity O(n)
 class Solution {
-    public String removeDuplicates(String S) {
+    public String solution(String S) {
         StringBuilder sb = new StringBuilder();
         for (char c : S.toCharArray()) {
             int size = sb.length();
