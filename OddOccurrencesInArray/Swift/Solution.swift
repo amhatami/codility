@@ -18,8 +18,9 @@ public func solution(_ A : inout [Int]) -> Int {
         }
     }//O(N)
     //print(inputElementCountDic.debugDescription)
+    //if occurs odd number of times, we found the unpaired value - no need to continue checking
     let solution = inputElementCountDic.first { (_, count) -> Bool in
         return count%2 != 0
-    } //O(N)
+    } //O(N*log(N))
     return solution!.key
 }
